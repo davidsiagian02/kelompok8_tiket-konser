@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiket Konser | Daftar Tiket</title>
+    <title>e-Tiket Konser</title>
     <!-- Import Style -->
     <link rel="stylesheet" href="../css/colors.css">
     <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/components.css">
 
     <!-- Import Material Icons -->
-     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-     <!-- Icons Website -->
+    <!-- Icons Website -->
     <link rel="icon" type="image" href="../assets/logo_ticket.png">
 </head>
 
@@ -33,8 +33,17 @@
         <p>Copyright©Kelompok8. All Rights Reserved</p>
     </div>
 
-    <div class="main-content">
-        <h1>Ini adalah halaman daftar tiket</h1>
+    <div class="dashboard-container">
+        <h1 class="dashboard-tittle">Dashboard <span>Control Panel</span></h1>
+
+        <div class="dashboard-box-user">
+            <h2 class="dashboard-box-user-tittle"><span class="material-symbols-outlined">groups</span> Total Pengguna</h2>
+            <h3 class="dashboard-box-total-user">0</h3>
+        </div>
+        <div class="dashboard-box-ticket">
+            <h2 class="dashboard-box-ticket-tittle"><span class="material-symbols-outlined">confirmation_number</span> Total Tiket</h2>
+            <h3 class="dashboard-box-total-ticket">0</h3>
+        </div>
     </div>
 </body>
 

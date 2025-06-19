@@ -1,0 +1,536 @@
+/* ====================================================[ USER MODE STYLES ]==================================================== */
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+/* Animation Keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    opacity: 0; /* Start hidden */
+}
+
+.fade-in-up.visible {
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+/* ===== Header / Navbar ===== */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transition: box-shadow 0.3s ease;
+}
+
+.navbar.scrolled {
+    box-shadow: var(--shadow-md);
+}
+
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-ocean-teal);
+}
+
+.logo span {
+    font-weight: 300;
+    color: var(--color-deep-ocean-blue);
+}
+
+.nav-links {
+    display: none; /* Hidden on mobile */
+}
+
+.nav-links a {
+    color: var(--color-soft-grey);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    color: var(--color-ocean-teal);
+}
+
+.nav-actions {
+        display: none; /* Hidden on mobile */
+}
+
+.nav-actions .btn-login {
+    color: var(--color-soft-grey);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+}
+
+.nav-actions .btn-login:hover {
+    color: var(--color-ocean-teal);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--color-ocean-teal);
+    color: var(--color-white);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-ocean-teal-dark);
+    transform: scale(1.05);
+}
+
+.mobile-menu-button {
+    display: block; /* Shown on mobile */
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--color-deep-ocean-blue);
+}
+
+/* ===== Mobile Menu ===== */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-white);
+    z-index: 99;
+    padding: 1.5rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.mobile-menu.open {
+    transform: translateX(0);
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+#close-menu-button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--color-deep-ocean-blue);
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-size: 1.125rem;
+}
+
+.mobile-nav-links a:hover {
+    color: var(--color-ocean-teal);
+}
+
+.mobile-menu-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btn-outline {
+    border: 1px solid #d1d5db;
+    color: var(--color-deep-ocean-blue);
+}
+
+.btn-outline:hover {
+    background-color: #f3f4f6;
+}
+
+/* ===== Hero Section ===== */
+.hero {
+    padding-top: 8rem;
+    padding-bottom: 5rem;
+    text-align: center;
+    color: var(--color-deep-ocean-blue);
+    background-color: var(--color-serene-blue);
+    background-image: linear-gradient(135deg, var(--color-serene-blue) 0%, #d4eaff 100%);
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--color-soft-grey);
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-transparent {
+    background-color: transparent;
+    border: 2px solid var(--color-deep-ocean-blue);
+    color: var(--color-deep-ocean-blue);
+}
+
+.btn-transparent:hover {
+    background-color: var(--color-deep-ocean-blue);
+    color: var(--color-white);
+}
+
+/* ===== General Section Styling ===== */
+.section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+.section-alt {
+    background-color: #f9fafb;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--color-deep-ocean-blue);
+}
+
+.section-header p {
+    margin-top: 0.5rem;
+    color: var(--color-soft-grey);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ===== Concerts Section ===== */
+.concert-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.concert-card {
+    background-color: var(--color-white);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.concert-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.concert-card img {
+    width: 100%;
+    height: 14rem;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.card-content h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-deep-ocean-blue);
+}
+
+.card-content .artists {
+    color: var(--color-soft-grey);
+    margin-bottom: 1rem;
+}
+
+.card-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-soft-grey);
+    margin-bottom: 0.5rem;
+}
+
+.card-info svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    color: var(--color-ocean-teal);
+}
+
+.card-content .btn {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.view-all-btn {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.btn-secondary {
+    background-color: #e5e7eb;
+    color: var(--color-deep-ocean-blue);
+}
+.btn-secondary:hover {
+    background-color: #d1d5db;
+}
+
+/* ===== About Us Section ===== */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+.about-image {
+    width: 100%;
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-lg);
+    object-fit: cover;
+}
+.about-content h3 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-deep-ocean-blue);
+    margin-bottom: 1rem;
+}
+    .about-content p {
+    margin-bottom: 1rem;
+}
+
+/* ===== Contact Section ===== */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+}
+
+.contact-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.contact-info-icon {
+    background-color: var(--color-serene-blue);
+    color: var(--color-deep-ocean-blue);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.contact-info-icon svg {
+    width: 24px;
+    height: 24px;
+}
+.contact-info-content h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-deep-ocean-blue);
+}
+
+.contact-form .form-group {
+    margin-bottom: 1.5rem;
+}
+.contact-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+.contact-form .form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.contact-form .form-control:focus {
+    outline: none;
+    border-color: var(--color-ocean-teal);
+    box-shadow: 0 0 0 3px rgba(0, 173, 181, 0.2);
+}
+
+
+/* ===== Footer ===== */
+.footer {
+    background-color: var(--color-deep-ocean-blue);
+    color: var(--color-white);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 3rem 0;
+}
+
+.footer-about .logo {
+    color: var(--color-white);
+}
+.footer-about .logo span {
+    color: var(--color-serene-blue);
+}
+.footer-about p {
+    margin-top: 1rem;
+    color: #9ca3af;
+    max-width: 28rem;
+}
+
+.footer-links h4 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.footer-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-links a {
+    color: #9ca3af;
+}
+
+.footer-links a:hover {
+    color: var(--color-serene-blue);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-links a {
+    color: #9ca3af;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: var(--color-serene-blue);
+}
+
+.footer-bottom {
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--color-soft-grey);
+    text-align: center;
+    font-size: 0.875rem;
+    color: #9ca3af;
+}
+
+/* ===== Responsive Design ===== */
+/* Tablet */
+@media (min-width: 768px) {
+    .nav-links, .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .mobile-menu-button {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 3.75rem;
+    }
+    
+    .concert-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .footer-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+    }
+    
+    .footer-about {
+        grid-column: span 2 / span 2;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+        .concert-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
