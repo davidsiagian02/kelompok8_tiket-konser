@@ -10,9 +10,17 @@ $active_page_user = basename($_SERVER['PHP_SELF']);
     <title><?php echo $page_title ?? 'TiketKu'; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Font 1 -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> -->
+
+    <!-- Font 2 -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #f8f9fa; }
+        body { font-family: 'Open Sans', sans-serif; background-color: #f8f9fa; }
         .navbar { box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .concert-card { transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
         .concert-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1) !important; }

@@ -2,8 +2,8 @@
             <p>© <?php echo date('Y'); ?> TiketKu. Dibuat dengan Penuh Semangat.</p>
         </footer>
 
-    </div> <!-- Akhir dari #content -->
-</div> <!-- Akhir dari .wrapper -->
+    </div>
+</div>
 
 
 <!-- Bootstrap JS Bundle CDN -->

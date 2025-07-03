@@ -7,7 +7,7 @@ $query = "SELECT * FROM v_laporan_penjualan";
 $hasil = mysqli_query($koneksi, $query);
 ?>
 
-<h1 class="mb-4 display-6">Laporan Penjualan</h1>
+<h1 class="page-title mb-4">Laporan Penjualan</h1>
 
 <div class="card">
     <div class="card-header">

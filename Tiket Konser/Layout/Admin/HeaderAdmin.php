@@ -13,8 +13,13 @@ $active_page = basename($_SERVER['PHP_SELF']);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Font 1 -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> -->
+
+    <!-- Font 2 -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary-color: #4f46e5;
@@ -24,7 +29,7 @@ $active_page = basename($_SERVER['PHP_SELF']);
             --sidebar-width: 260px;
         }
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Open Sans', sans-serif;
             background-color: var(--light-bg);
             color: #333;
             font-size: 15px; 
@@ -172,6 +177,9 @@ $active_page = basename($_SERVER['PHP_SELF']);
              <li class="<?php echo ($active_page == '../Admin/TambahKonser.php') ? 'active' : ''; ?>">
                 <a href="../Admin/TambahKonser.php"><i class="fas fa-plus-circle"></i> Tambah Konser</a>
             </li>
+            <li class="<?php echo ($active_page == '../Admin/LogAktivitas.php') ? 'active' : ''; ?>">
+                <a href="../Admin/LogAktivitas.php"><i class="fas fa-history"></i> Log Aktivitas</a>
+            </li>
         </ul>
         <div class="mt-auto">
             <ul class="list-unstyled sidebar-footer">
@@ -203,6 +211,7 @@ $active_page = basename($_SERVER['PHP_SELF']);
                     <li class="mb-2"><a class="d-block p-2 rounded <?php echo ($active_page == '../Admin/Dashboard.php') ? 'active' : ''; ?>" href="../Admin/Dashboard.php"><i class="fas fa-home fa-fw me-2"></i> Dashboard</a></li>
                     <li class="mb-2"><a class="d-block p-2 rounded <?php echo ($active_page == '../Admin/LaporanPenjualan.php') ? 'active' : ''; ?>" href="../Admin/LaporanPenjualan.php"><i class="fas fa-file-invoice-dollar fa-fw me-2"></i> Laporan Penjualan</a></li>
                     <li class="mb-2"><a class="d-block p-2 rounded <?php echo ($active_page == '../Admin/TambahKonser.php') ? 'active' : ''; ?>" href="../Admin/TambahKonser.php"><i class="fas fa-plus-circle fa-fw me-2"></i> Tambah Konser</a></li>
+                    <li class="mb-2"><a class="d-block p-2 rounded <?php echo ($active_page == '../Admin/LogAktivitas.php') ? 'active' : ''; ?>" href="../Admin/LogAktivitas.php"><i class="fas fa-history fa-fw me-2"></i> Log Aktivitas</a></li>
                 </ul>
                 <div>
                      <a class="d-block p-2 rounded text-danger bg-danger bg-opacity-10" href="../Auth/Logout.php"><i class="fas fa-sign-out-alt fa-fw me-2"></i> Logout</a>
