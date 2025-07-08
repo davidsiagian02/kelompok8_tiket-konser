@@ -1,6 +1,6 @@
 <?php
 session_start();
-// Pastikan pengguna sudah login
+// Untuk memastikan pengguna sudah login
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../Auth/Login.php");
     exit;
@@ -51,7 +51,7 @@ HTML;
 
 include '../Layout/User/HeaderUser.php';
 
-// --- LOGIKA PENCARIAN DAN FILTER (Tidak berubah) ---
+// Fungsi pencarian dan filter
 $search_term = '';
 $sort_order = 'tanggal_asc';
 $where_clauses = ["stok_tiket > 0"];
@@ -80,7 +80,7 @@ $hasil = mysqli_query($koneksi, $query);
 ?>
 
 <div class="container my-5">
-    <!-- Hero Section dan Form Filter (Tidak berubah) -->
+    <!-- Hero Section dan Form Filter -->
     <div class="p-5 text-center bg-body-tertiary rounded-3 mb-5" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop'); background-size: cover; background-position: center;">
         <h1 class="text-white display-4 fw-bold">Selamat Datang, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
         <p class="col-lg-8 mx-auto fs-5 text-white-50">Temukan dan beli tiket untuk konser musik paling seru tahun ini. Jangan sampai kehabisan!</p>
@@ -128,7 +128,7 @@ $hasil = mysqli_query($koneksi, $query);
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
-            <!-- Tampilan Kosong (Tidak berubah) -->
+            <!-- Tampilan Jika Belum Ada Konser Yang Di Input-->
             <div class="col-12">
                 <div class="text-center py-5 px-4 bg-light rounded-3">
                     <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg" alt="[Gambar ilustrasi tiket kosong]" class="img-fluid mb-4" style="max-width: 250px;">

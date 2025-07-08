@@ -2,42 +2,40 @@
 session_start();
 // Lindungi halaman ini, hanya untuk admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header("Location: ../Auth/Login.php");
+    header("Location: ../index.php");
     exit;
 }
 require_once '../Config/Database.php';
 $page_title = 'Dashboard Admin';
 include '../Layout/Admin/HeaderAdmin.php';
 
-// --- LOGIKA PHP UNTUK STATISTIK, PENCARIAN, DAN FILTER ---
-// Operasi Agregat
+// Semua Operasi Agregat
+
+// Count untuk menampilkan total konser
 $result_total_konser = mysqli_query($koneksi, "SELECT COUNT(id_konser) AS total FROM konser");
 $total_konser = mysqli_fetch_assoc($result_total_konser)['total'];
+
+// Sum untuk menampilkan total tiket terjual dan total pendapatan
 $result_total_terjual = mysqli_query($koneksi, "SELECT SUM(jumlah_tiket) AS total FROM transaksi");
 $total_terjual = mysqli_fetch_assoc($result_total_terjual)['total'] ?? 0;
 $result_total_pendapatan = mysqli_query($koneksi, "SELECT SUM(total_harga) AS total FROM transaksi");
 $total_pendapatan = mysqli_fetch_assoc($result_total_pendapatan)['total'] ?? 0;
+
+// Max untuk menampilkan harga tiket termahal
 $result_max_harga = mysqli_query($koneksi, "SELECT MAX(harga_tiket) AS maks FROM konser");
 $max_harga = mysqli_fetch_assoc($result_max_harga)['maks'] ?? 0;
+
+// Min untuk menampilkan harga tiket termurah
 $result_min_harga = mysqli_query($koneksi, "SELECT MIN(harga_tiket) AS termurah FROM konser");
 $data_min_harga = mysqli_fetch_assoc($result_min_harga);
 $min_harga = $data_min_harga['termurah'] ?? 0;
 
-// Menghitung Rata-rata Harga Tiket
+// Avg untuk menampilkan harga rata rata tiket
 $result_avg_harga = mysqli_query($koneksi, "SELECT AVG(harga_tiket) AS rata_rata FROM konser");
 $data_avg_harga = mysqli_fetch_assoc($result_avg_harga);
 $avg_harga = $data_avg_harga['rata_rata'] ?? 0;
 
-// --- QUERY BARU UNTUK WIDGET INFORMASI ---
-// 1. Query untuk konser yang akan datang
-$query_mendatang = "SELECT nama_konser, tanggal FROM konser WHERE tanggal >= CURDATE() ORDER BY tanggal ASC LIMIT 5";
-$hasil_mendatang = mysqli_query($koneksi, $query_mendatang);
-
-// 2. Query untuk aktivitas penjualan terakhir
-$query_aktivitas = "SELECT nama_konser, nama_pembeli, tanggal_pembelian FROM v_laporan_penjualan ORDER BY tanggal_pembelian DESC LIMIT 5";
-$hasil_aktivitas = mysqli_query($koneksi, $query_aktivitas);
-
-// Logika Pencarian dan Filter
+// Fungsi Pencarian dan Filter
 $search_term = '';
 $sort_order = 'tanggal_desc';
 $where_clauses = [];
@@ -46,6 +44,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
     $search_term = mysqli_real_escape_string($koneksi, $_GET['search']);
     $where_clauses[] = "(nama_konser LIKE '%$search_term%' OR artis LIKE '%$search_term%')";
 }
+
 if (isset($_GET['sort']) && !empty($_GET['sort'])) {
     $sort_order = $_GET['sort'];
     switch ($sort_order) {
@@ -55,7 +54,8 @@ if (isset($_GET['sort']) && !empty($_GET['sort'])) {
         default: $order_by_clause = 'ORDER BY tanggal DESC'; $sort_order = 'tanggal_desc'; break;
     }
 }
-$query = "SELECT * FROM konser";
+
+$query = "SELECT * FROM daftarkonser";
 if (!empty($where_clauses)) {
     $query .= " WHERE " . implode(' AND ', $where_clauses);
 }
@@ -142,58 +142,6 @@ $hasil = mysqli_query($koneksi, $query);
                     <p class="stat-card-title">Rata-rata Harga</p>
                     <div class="stat-card-number">Rp <?php echo number_format($avg_harga, 0, ',', '.'); ?></div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- === WIDGET INFORMASI BARU === -->
-<div class="row">
-    <!-- Widget Konser Akan Datang -->
-    <div class="col-lg-6 mb-4">
-        <div class="card h-100">
-            <div class="card-header">
-                <h5 class="m-0"><i class="fas fa-calendar-check me-2"></i>Konser Akan Datang</h5>
-            </div>
-            <div class="card-body">
-                <?php if ($hasil_mendatang && mysqli_num_rows($hasil_mendatang) > 0): ?>
-                    <ul class="list-group list-group-flush">
-                        <?php while($konser = mysqli_fetch_assoc($hasil_mendatang)): ?>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <?php echo htmlspecialchars($konser['nama_konser']); ?>
-                                <span class="badge bg-primary rounded-pill"><?php echo date('d M Y', strtotime($konser['tanggal'])); ?></span>
-                            </li>
-                        <?php endwhile; ?>
-                    </ul>
-                <?php else: ?>
-                    <p class="text-center text-muted">Tidak ada jadwal konser yang akan datang.</p>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
-
-    <!-- Widget Aktivitas Penjualan Terakhir -->
-    <div class="col-lg-6 mb-4">
-        <div class="card h-100">
-            <div class="card-header">
-                <h5 class="m-0"><i class="fas fa-receipt me-2"></i>Aktivitas Penjualan Terakhir</h5>
-            </div>
-            <div class="card-body">
-                <?php if ($hasil_aktivitas && mysqli_num_rows($hasil_aktivitas) > 0): ?>
-                     <ul class="list-group list-group-flush">
-                        <?php while($aktivitas = mysqli_fetch_assoc($hasil_aktivitas)): ?>
-                            <li class="list-group-item">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-1">Pembelian oleh: <?php echo htmlspecialchars($aktivitas['nama_pembeli']); ?></h6>
-                                    <small class="text-muted"><?php echo date('H:i', strtotime($aktivitas['tanggal_pembelian'])); ?></small>
-                                </div>
-                                <p class="mb-1 text-muted small">Untuk konser: <?php echo htmlspecialchars($aktivitas['nama_konser']); ?></p>
-                            </li>
-                        <?php endwhile; ?>
-                    </ul>
-                <?php else: ?>
-                     <p class="text-center text-muted">Belum ada aktivitas penjualan.</p>
-                <?php endif; ?>
             </div>
         </div>
     </div>

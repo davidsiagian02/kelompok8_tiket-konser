@@ -1,5 +1,8 @@
 <?php
-// Halaman untuk membeli tiket (membuat entri di tabel transaksi)
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
+    header("Location: ../index.php");
+    exit;
+}
 
 require_once '../Config/Database.php';
 
@@ -26,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: LaporanPenjualan.php");
         exit;
     } else {
-        // Tangkap pesan error dari trigger jika stok tidak cukup
+        // Menampilkan pesan error dari trigger jika stok tidak cukup
         $error_message = mysqli_error($koneksi);
     }
 }

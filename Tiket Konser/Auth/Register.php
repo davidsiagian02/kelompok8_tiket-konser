@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Masukkan pengguna baru ke database
             $insert_query = "INSERT INTO users (username, password, role) VALUES ('$username', '$hashed_password', 'user')";
             if (mysqli_query($koneksi, $insert_query)) {
-                $success_message = "Registrasi berhasil! Silakan <a href='login.php'>login</a>.";
+                $success_message = "Registrasi berhasil! Silakan <a href='../index.php'>login</a>.";
             } else {
                 $error_message = "Registrasi gagal, silakan coba lagi.";
             }
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </form>
                 <?php endif; ?>
                 <div class="text-center mt-4">
-                    <small class="text-muted">Sudah punya akun? <a href="Login.php">Login di sini</a></small>
+                    <small class="text-muted">Sudah punya akun? <a href="../index.php">Login di sini</a></small>
                 </div>
             </div>
         </div>

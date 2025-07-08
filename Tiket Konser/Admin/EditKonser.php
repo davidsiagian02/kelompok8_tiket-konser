@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header("Location: ../Auth/Login.php");
+    header("Location: ../index.php");
     exit;
 }
 
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $harga_tiket = mysqli_real_escape_string($koneksi, $_POST['harga_tiket']);
     $stok_tiket = mysqli_real_escape_string($koneksi, $_POST['stok_tiket']);
     
-    // Query UPDATE dengan kolom gambar_url
+    // Query UPDATE di tabel 'konser'
     $query = "UPDATE konser SET 
                 nama_konser = '$nama_konser', 
                 artis = '$artis', 

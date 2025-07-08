@@ -15,9 +15,6 @@ $active_page = basename($_SERVER['PHP_SELF']);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Font 1 -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> -->
-
-    <!-- Font 2 -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     
     <style>
@@ -61,7 +58,6 @@ $active_page = basename($_SERVER['PHP_SELF']);
         #sidebar ul li a i { margin-right: 12px; width: 20px; text-align: center; }
         .offcanvas a, .offcanvas a:hover { text-decoration: none; }
         
-        /* === KONTEN UTAMA === */
         #content {
             width: calc(100% - var(--sidebar-width)); padding: 25px 40px;
             min-height: 100vh; transition: all 0.3s;
@@ -78,7 +74,6 @@ $active_page = basename($_SERVER['PHP_SELF']);
             padding: 1rem 1.5rem;
         }
         
-        /* === PERBAIKAN CARD STATISTIK (GAMBAR 1) === */
         .stat-card-body {
             display: flex;
             align-items: center;
@@ -107,7 +102,6 @@ $active_page = basename($_SERVER['PHP_SELF']);
             font-size: 1.5rem;
         }
 
-        /* === PERBAIKAN TOMBOL AKSI (GAMBAR 2) === */
         .action-buttons {
             display: inline-flex;
             gap: 0.5rem;
@@ -176,9 +170,6 @@ $active_page = basename($_SERVER['PHP_SELF']);
             </li>
              <li class="<?php echo ($active_page == '../Admin/TambahKonser.php') ? 'active' : ''; ?>">
                 <a href="../Admin/TambahKonser.php"><i class="fas fa-plus-circle"></i> Tambah Konser</a>
-            </li>
-            <li class="<?php echo ($active_page == '../Admin/LogAktivitas.php') ? 'active' : ''; ?>">
-                <a href="../Admin/LogAktivitas.php"><i class="fas fa-history"></i> Log Aktivitas</a>
             </li>
         </ul>
         <div class="mt-auto">

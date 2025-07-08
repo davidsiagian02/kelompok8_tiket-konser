@@ -1,11 +1,12 @@
 <?php
 session_start();
-// Pastikan pengguna sudah login
+// Untuk memastikan pengguna sudah login
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: ../index.php");
     exit;
 }
 
+// Import database dan tampilan header
 require_once '../Config/Database.php';
 $page_title = 'Tiket Saya';
 include '../Layout/User/HeaderUser.php';

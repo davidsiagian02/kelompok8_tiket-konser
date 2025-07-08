@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header("Location: ../Auth/Login.php");
+    header("Location: ../index.php");
     exit;
 }
 
@@ -9,7 +9,7 @@ require_once '../Config/Database.php';
 
 // Cek jika form telah disubmit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Ambil data dari form dan lakukan sanitasi
+    // Ambil data dari form
     $nama_konser = mysqli_real_escape_string($koneksi, $_POST['nama_konser']);
     $artis = mysqli_real_escape_string($koneksi, $_POST['artis']);
     $tanggal = mysqli_real_escape_string($koneksi, $_POST['tanggal']);

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * File konfigurasi database
  * Berisi detail untuk koneksi ke server MySQL.
  */
@@ -13,7 +13,7 @@ $db_name = 'db_tiket_konser';
 // Membuat koneksi ke database menggunakan mysqli
 $koneksi = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
 
-// Cek koneksi (Jika gagal, hentikan script dan tampilkan pesan error)
+// Cek koneksi database (Jika gagal, hentikan script dan tampilkan pesan error)
 if (!$koneksi) {
     die("Koneksi ke database gagal: " . mysqli_connect_error());
 }

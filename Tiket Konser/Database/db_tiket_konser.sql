@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2025 at 09:52 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Jul 08, 2025 at 04:19 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,29 +24,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `audit_log`
+-- Stand-in structure for view `daftarkonser`
+-- (See below for the actual view)
 --
-
-CREATE TABLE `audit_log` (
-  `id_log` int(11) NOT NULL,
-  `tabel_terdampak` varchar(100) NOT NULL,
-  `id_record_terdampak` int(11) NOT NULL,
-  `aksi` varchar(50) NOT NULL,
-  `deskripsi_perubahan` text DEFAULT NULL,
-  `waktu_perubahan` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `audit_log`
---
-
-INSERT INTO `audit_log` (`id_log`, `tabel_terdampak`, `id_record_terdampak`, `aksi`, `deskripsi_perubahan`, `waktu_perubahan`) VALUES
-(1, 'konser', 4, 'UPDATE', 'Stok tiket diubah dari 50000 menjadi 49990.', '2025-06-26 07:00:51'),
-(2, 'konser', 5, 'UPDATE', 'Stok tiket diubah dari 15000 menjadi 14998.', '2025-06-26 07:00:57'),
-(3, 'konser', 4, 'UPDATE', 'Stok tiket diubah dari 49990 menjadi 0.', '2025-06-26 07:08:00'),
-(4, 'konser', 7, 'UPDATE', 'Stok tiket diubah dari 20000 menjadi 19980.', '2025-06-26 07:08:13'),
-(5, 'konser', 9, 'UPDATE', 'Stok tiket diubah dari 30000 menjadi 29900.', '2025-06-26 07:08:22'),
-(6, 'konser', 8, 'UPDATE', 'Stok tiket diubah dari 8000 menjadi 7000.', '2025-06-26 07:08:32');
+CREATE TABLE `daftarkonser` (
+`id_konser` int(11)
+,`nama_konser` varchar(255)
+,`artis` varchar(255)
+,`tanggal` date
+,`lokasi` varchar(255)
+,`gambar_url` varchar(255)
+,`harga_tiket` decimal(10,2)
+,`stok_tiket` int(11)
+);
 
 -- --------------------------------------------------------
 
@@ -70,32 +60,12 @@ CREATE TABLE `konser` (
 --
 
 INSERT INTO `konser` (`id_konser`, `nama_konser`, `artis`, `tanggal`, `lokasi`, `gambar_url`, `harga_tiket`, `stok_tiket`) VALUES
-(4, 'Night Christmast Special', 'Judika, Agnez Monica, Lyodra, Ari Lasso', '2025-12-25', 'Stadion Gelora Bung Karno', 'https://cdn.pixabay.com/photo/2021/12/17/13/29/concert-6876577_1280.jpg', 0.00, 0),
-(5, 'Alan Walker to Indonesia', 'Alan Walker', '2025-06-26', 'Stadion Keramat Jati', 'https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,f_auto,q_auto:best,w_640/v1634025439/01hg9wpqerf01y2rj0002758ax.jpg', 1500000.00, 14998),
-(6, 'Dewa 19: featuring All Stars 2.0', 'Dewa 19', '2025-06-30', 'Stadion Gelora Bung Karno', '', 500000.00, 20000),
-(7, 'Cigarettes After Sex: X\'s World Tour 2025', 'Cigarettes After Sex', '2025-08-07', 'Beach City International Stadium, Ancol, Jakarta', '', 1500000.00, 19980),
-(8, 'SEVENTEEN: Right Here World Tour in Asia', 'Seventeen', '2025-07-12', 'Stadion Gelora Bung Karno', '', 850000.00, 7000),
-(9, 'NCT DREAM', 'NCT DREAM', '2025-09-19', 'Jakarta International Stadium (JIS)', '', 1800000.00, 29900);
-
---
--- Triggers `konser`
---
-DELIMITER $$
-CREATE TRIGGER `trg_log_perubahan_konser` AFTER UPDATE ON `konser` FOR EACH ROW BEGIN
-    DECLARE deskripsi TEXT DEFAULT '';
-    IF OLD.harga_tiket <> NEW.harga_tiket THEN
-        SET deskripsi = CONCAT('Harga tiket diubah dari Rp ', FORMAT(OLD.harga_tiket, 0), ' menjadi Rp ', FORMAT(NEW.harga_tiket, 0), '. ');
-    END IF;
-    IF OLD.stok_tiket <> NEW.stok_tiket THEN
-        SET deskripsi = CONCAT(deskripsi, 'Stok tiket diubah dari ', OLD.stok_tiket, ' menjadi ', NEW.stok_tiket, '.');
-    END IF;
-    IF deskripsi <> '' THEN
-        INSERT INTO audit_log (tabel_terdampak, id_record_terdampak, aksi, deskripsi_perubahan)
-        VALUES ('konser', NEW.id_konser, 'UPDATE', deskripsi);
-    END IF;
-END
-$$
-DELIMITER ;
+(4, 'Night Christmast Special', 'Judika, Agnez Monica, Lyodra, Ari Lasso', '2025-12-25', 'Stadion Gelora Bung Karno', 'https://cdn.pixabay.com/photo/2021/12/17/13/29/concert-6876577_1280.jpg', '0.00', 0),
+(5, 'Alan Walker to Indonesia', 'Alan Walker', '2025-06-26', 'Stadion Keramat Jati', 'https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,f_auto,q_auto:best,w_640/v1634025439/01hg9wpqerf01y2rj0002758ax.jpg', '1500000.00', 0),
+(6, 'Dewa 19: featuring All Stars 2.0', 'Dewa 19', '2025-06-30', 'Stadion Gelora Bung Karno', '', '500000.00', 0),
+(7, 'Cigarettes After Sex: X\'s World Tour 2025', 'Cigarettes After Sex', '2025-08-07', 'Beach City International Stadium, Ancol, Jakarta', '', '1500000.00', 19980),
+(8, 'SEVENTEEN: Right Here World Tour in Asia', 'Seventeen', '2025-07-12', 'Stadion Gelora Bung Karno', '', '850000.00', 7000),
+(9, 'NCT DREAM', 'NCT DREAM', '2025-09-19', 'Jakarta International Stadium (JIS)', '', '1800000.00', 29900);
 
 -- --------------------------------------------------------
 
@@ -117,29 +87,14 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_konser`, `nama_pembeli`, `jumlah_tiket`, `total_harga`, `tanggal_pembelian`) VALUES
-(1, 4, 'rizki', 10, 0.00, '2025-06-26 07:00:51'),
-(2, 5, 'rizki', 2, 3000000.00, '2025-06-26 07:00:57'),
-(3, 4, 'rizki', 49990, 0.00, '2025-06-26 07:08:00'),
-(4, 7, 'rizki', 20, 30000000.00, '2025-06-26 07:08:13'),
-(5, 9, 'rizki', 100, 180000000.00, '2025-06-26 07:08:22'),
-(6, 8, 'rizki', 1000, 850000000.00, '2025-06-26 07:08:32');
-
---
--- Triggers `transaksi`
---
-DELIMITER $$
-CREATE TRIGGER `trg_update_stok_tiket` BEFORE INSERT ON `transaksi` FOR EACH ROW BEGIN
-    DECLARE harga_per_tiket DECIMAL(10,2);
-    DECLARE stok_saat_ini INT;
-    SELECT harga_tiket, stok_tiket INTO harga_per_tiket, stok_saat_ini FROM konser WHERE id_konser = NEW.id_konser;
-    IF stok_saat_ini < NEW.jumlah_tiket THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stok tiket tidak mencukupi.';
-    END IF;
-    SET NEW.total_harga = harga_per_tiket * NEW.jumlah_tiket;
-    UPDATE konser SET stok_tiket = stok_tiket - NEW.jumlah_tiket WHERE id_konser = NEW.id_konser;
-END
-$$
-DELIMITER ;
+(1, 4, 'rizki', 10, '0.00', '2025-06-26 07:00:51'),
+(2, 5, 'rizki', 2, '3000000.00', '2025-06-26 07:00:57'),
+(3, 4, 'rizki', 49990, '0.00', '2025-06-26 07:08:00'),
+(4, 7, 'rizki', 20, '30000000.00', '2025-06-26 07:08:13'),
+(5, 9, 'rizki', 100, '180000000.00', '2025-06-26 07:08:22'),
+(6, 8, 'rizki', 1000, '850000000.00', '2025-06-26 07:08:32'),
+(7, 5, 'rizki', 14998, '9999999999.99', '2025-07-08 01:59:52'),
+(8, 6, 'sarvin', 20000, '9999999999.99', '2025-07-08 02:16:22');
 
 -- --------------------------------------------------------
 
@@ -160,8 +115,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `username`, `password`, `role`, `created_at`) VALUES
-(3, 'david', '$2y$10$0kwbsq3HKi401rPnkG/ViujxmbCn7QbCrJ3PZjLmxf8eQX768BPJa', 'admin', '2025-06-26 06:36:55'),
-(4, 'rizki', '$2y$10$HytLToOgbwiQIC0Yksl3.e3D4rtRJ/HQAeAxAZuBFVxnFtxB4kZsa', 'user', '2025-06-26 06:38:23');
+(3, 'david', '$2y$10$0kwbsq3HKi401rPnkG/ViujxmbCn7QbCrJ3PZjLmxf8eQX768BPJa', 'user', '2025-06-26 06:36:55'),
+(5, 'sarvin', '$2y$10$N2S/buSev1YwEjs7D4tMpulVs5IC1u7lAMjwRVS5dJdz37VPpVZlq', 'user', '2025-07-08 02:15:57'),
+(6, 'admin', '$2y$10$u0OJAPNwm6Vj6/FuEwSlruQbID2ANVxElhlBW8ihzpfDiiDkDWOTW', 'admin', '2025-07-08 02:17:39');
 
 -- --------------------------------------------------------
 
@@ -182,21 +138,24 @@ CREATE TABLE `v_laporan_penjualan` (
 -- --------------------------------------------------------
 
 --
+-- Structure for view `daftarkonser`
+--
+DROP TABLE IF EXISTS `daftarkonser`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `daftarkonser`  AS SELECT `konser`.`id_konser` AS `id_konser`, `konser`.`nama_konser` AS `nama_konser`, `konser`.`artis` AS `artis`, `konser`.`tanggal` AS `tanggal`, `konser`.`lokasi` AS `lokasi`, `konser`.`gambar_url` AS `gambar_url`, `konser`.`harga_tiket` AS `harga_tiket`, `konser`.`stok_tiket` AS `stok_tiket` FROM `konser``konser`  ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure for view `v_laporan_penjualan`
 --
 DROP TABLE IF EXISTS `v_laporan_penjualan`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_laporan_penjualan`  AS SELECT `t`.`id_transaksi` AS `id_transaksi`, `k`.`nama_konser` AS `nama_konser`, `k`.`artis` AS `artis`, `t`.`nama_pembeli` AS `nama_pembeli`, `t`.`jumlah_tiket` AS `jumlah_tiket`, `t`.`total_harga` AS `total_harga`, `t`.`tanggal_pembelian` AS `tanggal_pembelian` FROM (`transaksi` `t` join `konser` `k` on(`t`.`id_konser` = `k`.`id_konser`)) ORDER BY `t`.`tanggal_pembelian` DESC ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_laporan_penjualan`  AS SELECT `t`.`id_transaksi` AS `id_transaksi`, `k`.`nama_konser` AS `nama_konser`, `k`.`artis` AS `artis`, `t`.`nama_pembeli` AS `nama_pembeli`, `t`.`jumlah_tiket` AS `jumlah_tiket`, `t`.`total_harga` AS `total_harga`, `t`.`tanggal_pembelian` AS `tanggal_pembelian` FROM (`transaksi` `t` join `konser` `k` on(`t`.`id_konser` = `k`.`id_konser`)) ORDER BY `t`.`tanggal_pembelian` AS `DESCdesc` ASC  ;
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `audit_log`
---
-ALTER TABLE `audit_log`
-  ADD PRIMARY KEY (`id_log`);
 
 --
 -- Indexes for table `konser`
@@ -227,12 +186,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `audit_log`
---
-ALTER TABLE `audit_log`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT for table `konser`
 --
 ALTER TABLE `konser`
@@ -242,13 +195,13 @@ ALTER TABLE `konser`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables

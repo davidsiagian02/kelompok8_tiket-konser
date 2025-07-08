@@ -1,119 +1,125 @@
+<?php
+session_start();
+require_once 'Config/Database.php';
+
+// Jika pengguna sudah login, arahkan ke halaman yang sesuai
+if (isset($_SESSION['user_id'])) {
+    if ($_SESSION['role'] == 'admin') {
+        header("Location: Admin/Dashboard.php");
+    } else {
+        header("Location: User/Beranda.php");
+    }
+    exit;
+}
+
+$error_message = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = mysqli_real_escape_string($koneksi, $_POST['username']);
+    $password = mysqli_real_escape_string($koneksi, $_POST['password']);
+
+    if (empty($username) || empty($password)) {
+        $error_message = "Username dan password tidak boleh kosong.";
+    } else {
+        $query = "SELECT * FROM users WHERE username = '$username'";
+        $result = mysqli_query($koneksi, $query);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            $user = mysqli_fetch_assoc($result);
+
+            // Untuk verifikasi password
+            if (password_verify($password, $user['password'])) {
+                // Jika password benar, maka otomatis buat session
+                $_SESSION['user_id'] = $user['id_user'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['role'] = $user['role'];
+
+                // Untuk mengarahkan berdasarkan perannya (hak akses)
+                if ($user['role'] == 'admin') {
+                    header("Location: Admin/Dashboard.php");
+                } else {
+                    header("Location: User/Beranda.php");
+                }
+                exit;
+            } else {
+                $error_message = "Username atau password salah.";
+            }
+        } else {
+            $error_message = "Username atau password salah.";
+        }
+    }
+}
+?>
 <!doctype html>
 <html lang="id">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TiketKu - Beli Tiket Konser Mudah & Cepat</title>
+    <title>Login - TiketKu</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- Font 1 -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> -->
-
-    <!-- Font 2 -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Open Sans', sans-serif; }
-        .hero {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 8rem 0;
-        }
-        .hero h1 { font-weight: 800; }
-        .feature-icon {
-            display: inline-flex;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f2f5;
+            display: flex;
             align-items: center;
             justify-content: center;
-            width: 4rem;
-            height: 4rem;
-            font-size: 2rem;
+            height: 100vh;
         }
-        .section-title { font-weight: 700; margin-bottom: 2rem; }
-        .footer { background-color: #111827; }
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .login-card .card-header {
+            background-color: #4f46e5;
+            color: white;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            text-align: center;
+            padding: 1.5rem 1rem;
+            border-bottom: 0;
+        }
+        .login-card .card-header h3 {
+            margin: 0;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
+    <div class="login-container">
+        <div class="card login-card">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-ticket me-2"></i> TiketKu Login</h3>
+            </div>
+            <div class="card-body p-4 p-md-5">
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
-      <div class="container">
-        <a class="navbar-brand fw-bold" href="#"><i class="fa-solid fa-ticket me-2"></i>TiketKu</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="btn btn-outline-light me-2" href="Auth/Login.php">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-primary" href="Auth/Register.php">Daftar Sekarang</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+                <?php if (!empty($error_message)): ?>
+                    <div class="alert alert-danger"><?php echo $error_message; ?></div>
+                <?php endif; ?>
 
-    <!-- Hero Section -->
-    <header class="hero text-center">
-        <div class="container">
-            <h1 class="display-3">Temukan Pengalaman Konser Terbaik Anda</h1>
-            <p class="lead col-lg-8 mx-auto">Beli tiket konser dari artis favorit Anda dengan mudah, cepat, dan aman. Jangan lewatkan momen tak terlupakan!</p>
-            <a href="Auth/Register.php" class="btn btn-primary btn-lg mt-3">Mulai Sekarang <i class="fa-solid fa-arrow-right ms-2"></i></a>
-        </div>
-    </header>
-
-    <!-- Features Section -->
-    <section class="py-5">
-        <div class="container">
-            <h2 class="text-center section-title">Kenapa Memilih TiketKu?</h2>
-            <div class="row text-center g-4">
-                <div class="col-md-4">
-                    <div class="feature-icon bg-primary bg-opacity-10 text-primary rounded-circle mb-3">
-                        <i class="fa-solid fa-bolt"></i>
+                <form action="index.php" method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
                     </div>
-                    <h4 class="fw-bold">Proses Cepat</h4>
-                    <p class="text-muted">Pesan tiket hanya dalam beberapa klik. Tidak perlu antri, tidak perlu ribet.</p>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-icon bg-success bg-opacity-10 text-success rounded-circle mb-3">
-                        <i class="fa-solid fa-shield-halved"></i>
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                    <h4 class="fw-bold">Transaksi Aman</h4>
-                    <p class="text-muted">Sistem pembayaran terverifikasi menjamin keamanan setiap transaksi Anda.</p>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-icon bg-warning bg-opacity-10 text-warning rounded-circle mb-3">
-                        <i class="fa-solid fa-tags"></i>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Login</button>
                     </div>
-                    <h4 class="fw-bold">Harga Terbaik</h4>
-                    <p class="text-muted">Dapatkan penawaran harga tiket konser yang kompetitif dan transparan.</p>
+                </form>
+                <div class="text-center mt-4">
+                    <small class="text-muted">Belum punya akun? <a href="Auth/Register.php">Daftar di sini</a></small>
                 </div>
             </div>
         </div>
-    </section>
-    
-    <!-- Call to Action Section -->
-    <section class="py-5 bg-light">
-        <div class="container text-center">
-            <h2 class="section-title">Siap untuk Berpetualang?</h2>
-            <p class="lead col-lg-6 mx-auto text-muted">Buat akun Anda sekarang dan jadilah bagian dari ribuan penikmat musik lainnya.</p>
-            <a href="Auth/Login.php" class="btn btn-dark btn-lg mt-3">Login atau Daftar</a>
-        </div>
-    </section>
-
-    <!-- Footer Section -->
-    <footer class="footer text-white py-4">
-        <div class="container text-center">
-            <p class="mb-0">&copy; <?php echo date('Y'); ?> TiketKu. All Right Reserved.</p>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
 </body>
 </html>

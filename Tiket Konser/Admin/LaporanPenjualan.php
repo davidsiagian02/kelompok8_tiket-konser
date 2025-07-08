@@ -3,6 +3,7 @@ require_once '../Config/Database.php';
 $page_title = 'Laporan Penjualan Tiket';
 include '../Layout/Admin/HeaderAdmin.php';
 
+// Mengambil data dari tabel v_laporan_penjualan
 $query = "SELECT * FROM v_laporan_penjualan";
 $hasil = mysqli_query($koneksi, $query);
 ?>
